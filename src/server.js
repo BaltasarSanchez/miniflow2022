@@ -1,6 +1,5 @@
 import express from "express";
 import routerDatos from "./rutas/datos.js";
-import routerRoot from "./rutas/root.js";
 import mongoose from "mongoose";
 
 import passport from "passport";
@@ -9,7 +8,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 
-import { isAuth, SessionChecker } from "./middlewares/Auth.js";
+import isAuth from "./middlewares/Auth.js";
 
 //TODO Preguntar al Lider técnico si esto esta bien.
 import { loginUser, getControllerUserByName } from "./controlador/datos.js";
@@ -25,13 +24,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 if (config.NODE_ENV == "development") app.use(cors());
 
+
+
+
+//Configuracion de LOGIN Y SESSION
 mongoose
   .connect(
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
   .catch((error) => console.log(error));
 
-//Configuracion de Login
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 app.use(
   session({
@@ -106,33 +108,37 @@ passport.deserializeUser(async function (username, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(SessionChecker);
-app.use("/", routerRoot);
 
-app.post('/login', function (req, res, next) {
+app.post('/auth/login', function (req, res, next) {
   passport.authenticate('login', function (err, user, info) {
     if (err) {
       return next(err);
     }
 
     if (!user) {
-      return res.send(401, { 'error': 'Credenciales Invalidas' });
+      return res.send(401, { 'status': 401, 'message': 'Credenciales Invalidas' });
     }
 
     req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
-      res.send({ 'message': 'Usuario Autenticado.' });
+      res.send({ 'status': 200, 'message': 'Usuario Autenticado.', 'user': req.user });
     });
   })(req, res, next);
 });
 
+app.get("/auth/logout", (req, res) => {
+  req.logout();
+  res.send({ 'status': 200, 'message': 'Usuario Deslogueado', 'user': req.user });
+});
+//FIN LOGIN Y SESSION
 
-app.use("/api", routerDatos);
 
-//ESTO ES TEMPORAL!!!!
-app.use("/", routerRoot);
+app.use("/api", isAuth, routerDatos);
+app.use("/api/insecure", routerDatos);
+
+
 
 // start server
 const PORT = config.PORT || 8081;

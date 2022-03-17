@@ -1,22 +1,11 @@
+
 function isAuth(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/login");
+    res.send(401, { 'status': 401, 'message': 'Usuario no autenticado' })
+
   }
 }
 
-async function SessionChecker(req, res, next) {
-  if (
-    req.session.nombre ||
-    req.url == "/login" ||
-    req.url == "/logout" ||
-    req.url == "/register"
-  ) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-}
-
-export { isAuth, SessionChecker };
+export default isAuth;
