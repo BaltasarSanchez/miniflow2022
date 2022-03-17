@@ -1,6 +1,5 @@
 import express from "express";
 import routerDatos from "./rutas/datos.js";
-import routerRoot from "./rutas/root.js";
 import mongoose from "mongoose";
 
 import passport from "passport";
@@ -9,7 +8,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 
-import { isAuth, SessionChecker } from "./middlewares/Auth.js";
+import isAuth from "./middlewares/Auth.js";
 
 //TODO Preguntar al Lider técnico si esto esta bien.
 import { loginUser, getControllerUserByName } from "./controlador/datos.js";

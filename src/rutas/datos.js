@@ -6,7 +6,7 @@ import {
   getAllContentController
 } from "../controlador/datos.js";
 
-import { isAuth } from "../middlewares/Auth.js";
+import isAuth from "../middlewares/Auth.js";
 
 const routerDatos = new Router();
 routerDatos.get("/users/", getAllUserController);
