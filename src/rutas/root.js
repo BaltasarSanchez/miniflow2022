@@ -20,7 +20,7 @@ routerRoot.get("/faillogin", (req, res) => {
         </form>`);
 });
 
-app.get("/failregister", (req, res) => {
+routerRoot.get("/failregister", (req, res) => {
   res.send("<h1>Error al registrar la cuenta</h1>");
 });
 
