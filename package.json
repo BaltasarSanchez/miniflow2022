@@ -1,18 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "hackathon-1",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.3"
-=======
   "name": "mini-flow-equipo-10",
   "version": "1.0.0",
   "type": "module",
@@ -39,6 +25,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
->>>>>>> a1f62a15fae34a883128a50a6d8ded6bec05f18b
   }
 }
