@@ -2,23 +2,25 @@ import {
   getUserById,
   getAllUsers,
   getContentById,
-  getAllcontent
+  getAllcontent,
+  getUserByEmail
 } from "../persistencia/datos.js";
 
 async function getUser(id) {
   return await getUserById(id);
 }
 
-async function getUserByName(username) {
+async function getUserByName(email) {
   try {
-    return await getUserById({ username });
+    return await getUserByEmail(email);
   } catch (e) {
     throw e.message;
   }
 }
-async function checkPassword(username, password) {
+async function checkPassword(mail, password) {
   try {
-    const user = await getUserByName(username);
+    console.log(mail);
+    const [user] = await getUserByEmail(mail);
     if (!user) {
       return false;
     }
@@ -27,7 +29,7 @@ async function checkPassword(username, password) {
     }
     return false;
   } catch (e) {
-    throw e.message;
+    console.log(e);
   }
 }
 async function getUsers() {
