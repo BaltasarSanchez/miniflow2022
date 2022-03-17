@@ -109,14 +109,31 @@ app.use(passport.session());
 //app.use(SessionChecker);
 app.use("/", routerRoot);
 
-app.post(
+/* app.post(
   "/login",
-  passport.authenticate("login", {
-    failureRedirect: "/faillogin",
-    successRedirect: "/"
-  })
-);
-
+  passport.authenticate("local", {
+    failureMessage: true
+  }),
+  function (req, res) {
+    res.redirect("/" + req.user.username);
+  }
+); */
+app.post("/login", function (req, res, next) {
+  passport.authenticate("login", function (err, user, info) {
+    if (err) {
+      return res.send("ERROR");
+    }
+    if (!user) {
+      return res.send({ error: "error" });
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send({ message: "User authenticated" });
+    });
+  })(req, res, next);
+});
 app.use("/api", routerDatos);
 
 //ESTO ES TEMPORAL!!!!
