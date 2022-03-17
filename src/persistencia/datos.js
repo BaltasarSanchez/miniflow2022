@@ -19,5 +19,15 @@ async function getAllcontent() {
   const user = await modelContenido.find();
   return user;
 }
+async function getUserByEmail(mail) {
+  const user = await modelUsuario.find({ mail });
+  return user;
+}
 
-export { getUserById, getAllUsers, getAllcontent, getContentById };
+export {
+  getUserById,
+  getAllUsers,
+  getAllcontent,
+  getContentById,
+  getUserByEmail
+};

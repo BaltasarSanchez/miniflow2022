@@ -3,7 +3,8 @@ import {
   getUsers,
   getContent,
   getContents,
-  checkPassword
+  checkPassword,
+  getUserByName
 } from "../negocio/datos.js";
 
 async function getUserController(req, res) {
@@ -37,26 +38,29 @@ async function getAllContentController(req, res) {
     return res.json({ error: "error" });
   }
 }
-async function getControllerUserByName(name) {
+
+//TODO : NO ES UN CONTROLADOR, MOVER
+async function getControllerUserByName(mail) {
   try {
-    const user = await getUserByName(name);
+    const [user] = await getUserByName(mail);
     if (user) {
-      return res.json(user);
+      return user;
     }
-    return res.json({ message: "Usuario no encontrado" });
+    return null;
   } catch (e) {
-    throw e.message;
+    console.log(e.message);
   }
 }
-async function loginUser(username, password) {
+async function loginUser(email, password) {
   try {
-    const logged = await checkPassword(username, password);
+    const logged = await checkPassword(email, password);
+    console.log(logged);
     if (!logged) {
       return false;
     }
     return true;
   } catch (e) {
-    throw e.message;
+    console.log("error");
   }
 }
 

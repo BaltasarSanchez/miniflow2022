@@ -11,7 +11,7 @@ import cors from "cors";
 
 import { isAuth, SessionChecker } from "./middlewares/Auth.js";
 
-//TODO Preguntar al Lider técnico si esto esta bien. 
+//TODO Preguntar al Lider técnico si esto esta bien.
 import { loginUser, getControllerUserByName } from "./controlador/datos.js";
 
 import config from "./config.js";
@@ -30,7 +30,6 @@ mongoose
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
   .catch((error) => console.log(error));
-
 
 //Configuracion de Login
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -81,11 +80,12 @@ passport.use(
       usernameField: "email"
     },
     async (username, password, done) => {
-      console.log("2");
+      console.log(username);
       //VER ESTA PARTE
       /*   if (await miUsuarioDAO.checkPassword(username, password))  */
       if (await loginUser(username, password)) {
         const usuario = await getControllerUserByName(username);
+
         return done(null, usuario);
       } else {
         return done({ error: "Usuario o contraseña incorrectos" }, false);
@@ -95,7 +95,8 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  done(null, user.username);
+  console.log(user);
+  done(null, user);
 });
 
 passport.deserializeUser(async function (username, done) {
@@ -111,15 +112,15 @@ app.use(passport.session());
 
 app.use("/", routerRoot);
 
-app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin', successRedirect: '/' }))
-app.post('/register', passport.authenticate('register', { failureRedirect: '/failregister', successRedirect: '/' }))
+app.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/faillogin",
+    successRedirect: "/"
+  })
+);
 
 app.use("/api/datos", isAuth, routerDatos);
-
-
-
-
-
 
 //ESTO ES TEMPORAL!!!!
 app.use("/", routerRoot);
