@@ -25,8 +25,8 @@ routerRoot.get("/failregister", (req, res) => {
 });
 
 routerRoot.post("/logout", (req, res) => {
-  res.send("<h1>Session Finalizada</h1>");
   req.logout();
+  res.send("<h1>Session Finalizada</h1>");
 });
 
 routerRoot.get("/", isAuth, (req, res) => {
