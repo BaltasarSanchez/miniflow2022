@@ -120,7 +120,7 @@ app.post(
   })
 );
 
-app.use("/api/datos", isAuth, routerDatos);
+app.use("/api", routerDatos);
 
 //ESTO ES TEMPORAL!!!!
 app.use("/", routerRoot);
