@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { isAuth } from "../middlewares/Auth.js";
+
 
 const routerRoot = new Router();
 routerRoot.get("/login", (req, res) => {
@@ -22,12 +24,12 @@ routerRoot.get("/faillogin", (req, res) => {
 
 
 
-app.get('/logout', (req, res) => {
+routerRoot.get('/logout', (req, res) => {
     res.send('<h1>Session Finalizada</h1>')
     req.logout();
 });
 
-app.get('/', (req, res) => {
+routerRoot.get('/', isAuth, (req, res) => {
     res.send(`<h1>Bienvenido</h1>
     <p>${req.user.nombre}</p> 
     <a href="/logout">Logout</a>`);

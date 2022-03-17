@@ -18,6 +18,10 @@ import config from "./config.js";
 import logger from "./middlewares/logger.js";
 
 const app = express();
+
+//utf8 characters
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 if (config.NODE_ENV == "development") app.use(cors());
 
@@ -120,7 +124,7 @@ app.use("/api/datos", isAuth, routerDatos);
 app.use("/", routerRoot);
 
 // start server
-const PORT = config.PORT || 8000;
+const PORT = config.PORT || 8081;
 const server = app.listen(PORT, () => {
   logger.info(
     `Servidor express escuchando en el puerto ${PORT} (${config.NODE_ENV})`
