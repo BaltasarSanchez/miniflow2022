@@ -24,6 +24,11 @@ routerRoot.get("/faillogin", (req, res) => {
 
 
 
+app.get('/failregister', (req, res) => {
+    res.send("<h1>Error al registrar la cuenta</h1>");
+})
+
+
 routerRoot.get('/logout', (req, res) => {
     res.send('<h1>Session Finalizada</h1>')
     req.logout();

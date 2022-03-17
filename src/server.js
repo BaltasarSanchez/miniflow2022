@@ -112,6 +112,7 @@ app.use(passport.session());
 app.use("/", routerRoot);
 
 app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin', successRedirect: '/' }))
+app.post('/register', passport.authenticate('register', { failureRedirect: '/failregister', successRedirect: '/' }))
 
 app.use("/api/datos", isAuth, routerDatos);
 
