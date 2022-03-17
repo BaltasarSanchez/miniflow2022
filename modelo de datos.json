@@ -1,32 +1,29 @@
 //Usuario
-
 {
-        "id": 1,
-        "nombre": "Juan",
-        "apellido": "Perez",
-        "mail": "test@gmail.com",
-        "password": "123456",
-        "telefono": "123456789",
-        "direccion": "Calle falsa 123",
-        "rol": "usuario",
-        "avatar": "avatar.jpg",
-        "fecha_nacimiento": "2000-01-01",
-        "ContenidosLikeados": [
-        {   
-                "idContenido": 1,
-                "idUsuario": 1,
-                "fecha": "2020-05-05"
+    "id": 1,
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "mail": "test@gmail.com",
+    "password": "123456",
+    "telefono": "123456789",
+    "direccion": "Calle falsa 123",
+    "rol": "usuario",
+    "avatar": "avatar.jpg",
+    "fecha_nacimiento": "2000-01-01",
+    "ContenidosLikeados": [
+        {
+            "idContenido": 1,
+            "idUsuario": 1,
+            "fecha": "2020-05-05"
         },
         {
-                "idContenido": 2,
-                "idUsuario": 1,
-                "fecha": "2020-05-05"
+            "idContenido": 2,
+            "idUsuario": 1,
+            "fecha": "2020-05-05"
         }
     ]
 }
-
 //Contenido
-
 {
     "id": 1,
     "titulo": "Titulo",
@@ -51,7 +48,30 @@
             "comentarioTexto": "la peli está muy buena"
         }
     ]
-
 }
 
-MONGO_URL=mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+MONGO_URL=mongodb+srv: //admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+{
+    "id": 2,
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "mail": "test@gmail.com",
+    "password": "123456",
+    "telefono": "123456789",
+    "direccion": "Calle falsa 123",
+    "rol": "usuario",
+    "avatar": "avatar.jpg",
+    "fecha_nacimiento": "2000-01-01",
+    "ContenidosLikeados": [
+        {
+            "idContenido": 1,
+            "idUsuario": 2,
+            "fecha": "2020-05-05"
+        },
+        {
+            "idContenido": 2,
+            "idUsuario": 2,
+            "fecha": "2020-05-07"
+        }
+    ]
+}
