@@ -109,13 +109,25 @@ app.use(passport.session());
 //app.use(SessionChecker);
 app.use("/", routerRoot);
 
-app.post(
-  "/login",
-  passport.authenticate("login", {
-    failureRedirect: "/faillogin",
-    successRedirect: "/"
-  })
-);
+app.post('/login', function (req, res, next) {
+  passport.authenticate('login', function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.send(401, { 'error': 'Credenciales Invalidas' });
+    }
+
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send({ 'message': 'Usuario Autenticado.' });
+    });
+  })(req, res, next);
+});
+
 
 app.use("/api", routerDatos);
 
