@@ -7,6 +7,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
+import path from "path";
 
 import isAuth from "./middlewares/Auth.js";
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 if (config.NODE_ENV == "development") app.use(cors());
+app.use(express.static('src/public'));
 
 
 
