@@ -1,5 +1,6 @@
 import express from "express";
 import routerDatos from "./rutas/datos.js";
+import routerRoot from "./rutas/root.js";
 import mongoose from "mongoose";
 
 import passport from "passport";
@@ -8,7 +9,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 
-import isAuth from "./middlewares/isAuth.js";
+import { isAuth, SessionChecker } from "./middlewares/Auth.js";
 import config from "./config.js";
 import logger from "./middlewares/logger.js";
 
@@ -16,12 +17,13 @@ const app = express();
 app.use(express.json());
 if (config.NODE_ENV == "development") app.use(cors());
 
-app.use("/api/datos", routerDatos);
 mongoose
   .connect(
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
   .catch((error) => console.log(error));
+
+
 //Configuracion de Login
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 app.use(
@@ -96,7 +98,23 @@ passport.deserializeUser(async function (username, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+//app.use(SessionChecker);
+
+app.use("/", routerRoot);
+
+app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin', successRedirect: '/' }))
+
 app.use("/api/datos", routerDatos);
+
+
+
+
+
+
+//ESTO ES TEMPORAL!!!!
+app.use("/", routerRoot);
 
 // start server
 const PORT = config.PORT || 8000;
