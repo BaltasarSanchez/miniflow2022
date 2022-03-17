@@ -80,22 +80,21 @@ passport.use(
       usernameField: "email"
     },
     async (username, password, done) => {
-      console.log(username);
       //VER ESTA PARTE
       /*   if (await miUsuarioDAO.checkPassword(username, password))  */
       if (await loginUser(username, password)) {
         const usuario = await getControllerUserByName(username);
-
-        return done(null, usuario);
+        return done(null, usuario.mail);
       } else {
-        return done({ error: "Usuario o contraseña incorrectos" }, false);
+        return done(
+          /* { error: "Usuario o contraseña incorrectos" } */ null,
+          false
+        );
       }
     }
   )
 );
-
 passport.serializeUser(function (user, done) {
-  console.log(user);
   done(null, user);
 });
 
@@ -107,23 +106,21 @@ passport.deserializeUser(async function (username, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 //app.use(SessionChecker);
-
 app.use("/", routerRoot);
 
 app.post(
   "/login",
   passport.authenticate("login", {
     failureRedirect: "/faillogin",
-    successRedirect: "/"
+    successRedirect: "/form"
   })
 );
 
 app.use("/api/datos", isAuth, routerDatos);
 
 //ESTO ES TEMPORAL!!!!
-app.use("/", routerRoot);
+app.use("/form", routerRoot);
 
 // start server
 const PORT = config.PORT || 8081;
