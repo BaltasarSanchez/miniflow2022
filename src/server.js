@@ -120,7 +120,7 @@ app.post(
 app.use("/api", routerDatos);
 
 //ESTO ES TEMPORAL!!!!
-app.use("/form", routerRoot);
+app.use("/", routerRoot);
 
 // start server
 const PORT = config.PORT || 8081;
