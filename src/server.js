@@ -7,7 +7,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
-
+import { loginUser, getControllerUserByName } from "./controlador/datos.js";
 import isAuth from "./middlewares/isAuth.js";
 import config from "./config.js";
 import logger from "./middlewares/logger.js";
@@ -16,7 +16,6 @@ const app = express();
 app.use(express.json());
 if (config.NODE_ENV == "development") app.use(cors());
 
-app.use("/api/datos", routerDatos);
 mongoose
   .connect(
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -51,12 +50,10 @@ passport.use(
     },
     async (req, username, password, done) => {
       const { nombre, email } = req.body;
-
       //VER ESTA PARTE!!!
       const usuario = { nombre, username, email, password, contador: 0 };
       const resultado = await miUsuarioDAO.addUsuario(usuario);
       //VER ESTA PARTE!!!
-
       if (!resultado.error) {
         return done(null, usuario);
       } else {
@@ -73,9 +70,11 @@ passport.use(
       usernameField: "email"
     },
     async (username, password, done) => {
+      console.log("2");
       //VER ESTA PARTE
-      if (await miUsuarioDAO.checkPassword(username, password)) {
-        const usuario = await miUsuarioDAO.getUsuario(username);
+      /*   if (await miUsuarioDAO.checkPassword(username, password))  */
+      if (await loginUser(username, password)) {
+        const usuario = await getControllerUserByName(username);
         return done(null, usuario);
       } else {
         return done({ error: "Usuario o contraseña incorrectos" }, false);
@@ -90,13 +89,14 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(async function (username, done) {
   //VER ESTA PARTE
-  const usuario = await miUsuarioDAO.getUsuario(username);
+  const usuario = await getControllerUserByName(username);
   done(null, usuario);
 });
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/api/datos", routerDatos);
+
+app.use("/api/datos", isAuth, routerDatos);
 
 // start server
 const PORT = config.PORT || 8000;
