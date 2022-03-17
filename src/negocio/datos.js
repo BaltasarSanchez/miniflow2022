@@ -19,7 +19,6 @@ async function getUserByName(email) {
 }
 async function checkPassword(mail, password) {
   try {
-    console.log(mail);
     const [user] = await getUserByEmail(mail);
     if (!user) {
       return false;
@@ -29,6 +28,7 @@ async function checkPassword(mail, password) {
     }
     return false;
   } catch (e) {
+    // TODO: MEJORAR MANEJO DE ERRORES
     console.log(e);
   }
 }

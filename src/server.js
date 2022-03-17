@@ -113,7 +113,7 @@ app.post(
   "/login",
   passport.authenticate("login", {
     failureRedirect: "/faillogin",
-    successRedirect: "/form"
+    successRedirect: "/"
   })
 );
 
