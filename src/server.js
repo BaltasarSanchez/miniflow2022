@@ -35,8 +35,8 @@ var corsOptions = {
 }
 
 
-app.use(cors(corsOptions));
-//app.use(CorsHeaders);
+//app.use(cors(corsOptions));
+app.use(CorsHeaders);
 
 app.use(express.static('src/public'));
 
