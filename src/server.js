@@ -22,30 +22,21 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-<<<<<<< HEAD
-if (config.NODE_ENV == "development") app.use(cors());
 
-=======
-
-var corsOptions = {
+/* var corsOptions = {
   origin: ['http://example.com', 'http://localhost:3000'],
   credentials: true,
   exposedHeaders: ["set-cookie"],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+} */
 
-
-//app.use(cors(corsOptions));
+/* app.use(cors(corsOptions)); */
 app.use(CorsHeaders);
+app.use(express.static("src/public"));
 
-app.use(express.static('src/public'));
-
-
-
-https://miniflow2022.herokuapp.com/auth/login
->>>>>>> 27d98d3061b9b6e8f7d31c653ef980502c659235
+//miniflow2022.herokuapp.com/auth/login
 //Configuracion de LOGIN Y SESSION
-mongoose
+https: mongoose
   .connect(
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
@@ -65,7 +56,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 600000
+      maxAge: 600000,
+      sameSite: false
     }
   })
 );
