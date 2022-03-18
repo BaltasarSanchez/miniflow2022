@@ -31,8 +31,8 @@ app.use(express.json());
 } */
 
 /* app.use(cors(corsOptions)); */
-app.use(CorsHeaders);
 app.use(express.static("src/public"));
+app.use(CorsHeaders);
 
 //miniflow2022.herokuapp.com/auth/login
 //Configuracion de LOGIN Y SESSION
@@ -57,9 +57,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 600000,
-      sameSite: false,
-      secure: false,
-      httpOnly: false
+      sameSite: "none"
     }
   })
 );

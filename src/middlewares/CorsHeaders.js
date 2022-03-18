@@ -10,6 +10,8 @@ function CorsHeaders(req, res, next) {
     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
   );
 
+  res.header("Access-Control-Expose-Headers", " set-cookie");
+
   next();
 }
 
