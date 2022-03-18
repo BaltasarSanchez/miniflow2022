@@ -13,7 +13,7 @@ Sanchez Baena, Baltasar
 ### Mentores
 ```
 Donato Vignais, Noelia
-Vera Tapia, Patricia
+Vera Tapia, Patricio
 ```
 
 ### Wireframe [vínculo a Figma](https://www.figma.com/file/a9jbJHpOd56FgiNdlGUNHu/Wireframe-Hackaton-Team-10?node-id=133%3A671)
