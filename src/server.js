@@ -7,8 +7,8 @@ import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
-
 import isAuth from "./middlewares/Auth.js";
+import CorsHeaders from "./middlewares/CorsHeaders.js";
 
 //TODO Preguntar al Lider técnico si esto esta bien.
 import { loginUser, getControllerUserByName } from "./controlador/datos.js";
@@ -22,8 +22,27 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+<<<<<<< HEAD
 if (config.NODE_ENV == "development") app.use(cors());
 
+=======
+
+var corsOptions = {
+  origin: ['http://example.com', 'http://localhost:3000'],
+
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+
+app.use(cors(corsOptions));
+app.use(CorsHeaders);
+
+app.use(express.static('src/public'));
+
+
+
+https://miniflow2022.herokuapp.com/auth/login
+>>>>>>> 27d98d3061b9b6e8f7d31c653ef980502c659235
 //Configuracion de LOGIN Y SESSION
 mongoose
   .connect(
