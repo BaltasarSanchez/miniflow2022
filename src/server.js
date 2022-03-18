@@ -23,24 +23,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-var corsOptions = {
+/* var corsOptions = {
   origin: ['http://example.com', 'http://localhost:3000'],
   credentials: true,
   exposedHeaders: ["set-cookie"],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+} */
 
+/* app.use(cors(corsOptions)); */
+app.use(CorsHeaders);
+app.use(express.static("src/public"));
 
-app.use(cors(corsOptions));
-//app.use(CorsHeaders);
-
-app.use(express.static('src/public'));
-
-
-
-https://miniflow2022.herokuapp.com/auth/login
+//miniflow2022.herokuapp.com/auth/login
 //Configuracion de LOGIN Y SESSION
-mongoose
+https: mongoose
   .connect(
     "mongodb+srv://admin:Merluza23@cluster0.vuapg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
@@ -60,7 +56,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 600000
+      maxAge: 600000,
+      sameSite: false
     }
   })
 );
@@ -121,36 +118,37 @@ passport.deserializeUser(async function (username, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/auth/login', function (req, res, next) {
-  passport.authenticate('login', function (err, user, info) {
+app.post("/auth/login", function (req, res, next) {
+  passport.authenticate("login", function (err, user, info) {
     if (err) {
       return next(err);
     }
 
     if (!user) {
-      return res.send(401, { 'status': 401, 'message': 'Credenciales Invalidas' });
+      return res.send(401, { status: 401, message: "Credenciales Invalidas" });
     }
 
     req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
-      res.send({ 'status': 200, 'message': 'Usuario Autenticado.', 'user': req.user });
+      res.send({
+        status: 200,
+        message: "Usuario Autenticado.",
+        user: req.user
+      });
     });
   })(req, res, next);
 });
 
 app.get("/auth/logout", (req, res) => {
   req.logout();
-  res.send({ 'status': 200, 'message': 'Usuario Deslogueado', 'user': req.user });
+  res.send({ status: 200, message: "Usuario Deslogueado", user: req.user });
 });
 //FIN LOGIN Y SESSION
 
-
 app.use("/api", isAuth, routerDatos);
 app.use("/insecure/api", routerDatos);
-
-
 
 // start server
 const PORT = config.PORT || 8081;
