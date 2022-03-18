@@ -30,9 +30,9 @@ app.use(express.json());
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 } */
 
-/* app.use(cors(corsOptions)); */
-app.use(CorsHeaders);
+/* app.use(cors()); */
 app.use(express.static("src/public"));
+app.use(CorsHeaders);
 
 //miniflow2022.herokuapp.com/auth/login
 //Configuracion de LOGIN Y SESSION
@@ -56,8 +56,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 600000,
-      sameSite: false
+      maxAge: 600000
     }
   })
 );
