@@ -148,7 +148,7 @@ app.get("/auth/logout", (req, res) => {
 
 
 app.use("/api", isAuth, routerDatos);
-app.use("/api/insecure", routerDatos);
+app.use("/insecure/api", routerDatos);
 
 
 
