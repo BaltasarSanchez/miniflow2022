@@ -156,7 +156,7 @@ app.get("/auth/logout", (req, res) => {
 //FIN LOGIN Y SESSION
 
 app.use("/api", isAuth, routerDatos);
-app.use("/api/insecure", routerDatos);
+app.use("/insecure/api", routerDatos);
 
 // start server
 const PORT = config.PORT || 8081;
