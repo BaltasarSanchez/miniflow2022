@@ -8,6 +8,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 import isAuth from "./middlewares/Auth.js";
+import CorsHeaders from "./middlewares/CorsHeaders.js";
 
 //TODO Preguntar al Lider técnico si esto esta bien.
 import { loginUser, getControllerUserByName } from "./controlador/datos.js";
@@ -27,7 +28,11 @@ var corsOptions = {
 
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-app.use(cors(corsOptions));
+
+
+//app.use(cors(corsOptions));
+app.use(CorsHeaders);
+
 app.use(express.static('src/public'));
 
 
