@@ -30,7 +30,7 @@ app.use(express.json());
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 } */
 
-app.use(cors());
+/* app.use(cors()); */
 app.use(express.static("src/public"));
 app.use(CorsHeaders);
 
