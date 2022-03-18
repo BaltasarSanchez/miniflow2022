@@ -57,7 +57,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 600000,
-      sameSite: false
+      sameSite: false,
+      secure: false,
+      httpOnly: false
     }
   })
 );
